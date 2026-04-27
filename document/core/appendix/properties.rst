@@ -27,7 +27,7 @@ Contexts
 ~~~~~~~~
 
 In order to check :ref:`rolled up <aux-roll-rectype>` recursive types,
-the :ref:`context <context>` is locally extended with an additional component that records the :ref:`sub type <syntax-subtype>` corresponding to each :ref:`recursive type index <syntax-rectypeidx>` within the current :ref:`recursive type <syntax-rectype>`:
+the :ref:`context <context>` is locally extended with an additional component that records the :ref:`sub type <syntax-subtype>` corresponding to each :ref:`recursive type index <syntax-rectypeidx>` within the current group of :ref:`recursive types <syntax-rectype>`:
 
 $${syntax: context/sem}
 

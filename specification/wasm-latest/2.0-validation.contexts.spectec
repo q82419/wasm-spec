@@ -38,9 +38,7 @@ syntax context/syn hint(desc "context") hint(macro "%" "C%") =
   }
 
 syntax context/sem hint(macro "%" "C%") =
-  { ...,
-    RECS subtype*           hint(desc "recursive type")
-  }
+  { ..., RECS subtype*      hint(desc "recursive type") }
 
 var C : context
 
