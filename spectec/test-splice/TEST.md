@@ -309,7 +309,8 @@ warning: syntax `code` was never spliced
 warning: syntax `comptype` was never spliced
 warning: syntax `config` was never spliced
 warning: syntax `consttype` was never spliced
-warning: syntax `context` was never spliced
+warning: syntax `context/syn` was never spliced
+warning: syntax `context/sem` was never spliced
 warning: syntax `cvtop__` was never spliced
 warning: syntax `cvtop__` was never spliced
 warning: syntax `cvtop__` was never spliced

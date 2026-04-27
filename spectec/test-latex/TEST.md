@@ -4520,9 +4520,8 @@ $$
 
 $$
 \begin{array}[t]{@{}lrrl@{}l@{}}
-\mbox{(context)} & {\mathit{context}} & ::= & \{ \begin{array}[t]{@{}l@{}l@{}}
+& {\mathit{context}} & ::= & \{ \begin{array}[t]{@{}l@{}l@{}}
 \mathsf{types}~{{\mathit{deftype}}^\ast} \\
-\mathsf{recs}~{{\mathit{subtype}}^\ast} \\
 \mathsf{tags}~{{\mathit{tagtype}}^\ast} \\
 \mathsf{globals}~{{\mathit{globaltype}}^\ast} \\
 \mathsf{mems}~{{\mathit{memtype}}^\ast} \\
@@ -4533,7 +4532,8 @@ $$
 \mathsf{locals}~{{\mathit{localtype}}^\ast} \\
 \mathsf{labels}~{{\mathit{resulttype}}^\ast} \\
 \mathsf{return}~{{\mathit{resulttype}}^?} \\
-\mathsf{refs}~{{\mathit{funcidx}}^\ast} \} \\
+\mathsf{refs}~{{\mathit{funcidx}}^\ast} \\
+\mathsf{recs}~{{\mathit{subtype}}^\ast} \} \\
 \end{array} \\
 \end{array}
 $$

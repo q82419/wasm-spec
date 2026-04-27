@@ -29,11 +29,7 @@ Contexts
 In order to check :ref:`rolled up <aux-roll-rectype>` recursive types,
 the :ref:`context <context>` is locally extended with an additional component that records the :ref:`sub type <syntax-subtype>` corresponding to each :ref:`recursive type index <syntax-rectypeidx>` within the current :ref:`recursive type <syntax-rectype>`:
 
-.. math::
-   \begin{array}{llll}
-   \production{context} & C &::=&
-     \{~ \dots, \CRECS ~ \subtype^\ast ~\} \\
-   \end{array}
+$${syntax: context/sem}
 
 
 .. index:: value type, reference type, heap type, bottom type, sub type, recursive type, recursive type index
