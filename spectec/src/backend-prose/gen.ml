@@ -71,7 +71,7 @@ let dependent_rel_id_of_exp exp =
 let rec dependent_rel_id_of_prem prem =
   match prem.it with
   | Ast.IfPr exp -> dependent_rel_id_of_exp exp
-  | Ast.LetPr (exp1, exp2, _) -> pairwise_concat_map dependent_rel_id_of_exp [exp1; exp2]
+  | Ast.LetPr (_, exp1, exp2) -> pairwise_concat_map dependent_rel_id_of_exp [exp1; exp2]
   | Ast.RulePr (id, _, _, exp) -> pairwise_concat [([id], []); dependent_rel_id_of_exp exp]
   | Ast.IterPr (prem', _) -> dependent_rel_id_of_prem prem'
   | _ -> ([], [])
@@ -367,7 +367,7 @@ let inject_ctx frees c stmts =
 
 let rec prem_to_instrs prem =
   match prem.it with
-  | Ast.LetPr (e1, e2, _) ->
+  | Ast.LetPr (_, e1, e2) ->
     [ LetS (exp_to_expr e1, exp_to_expr e2) ]
   | Ast.IfPr e ->
     if_expr_to_instrs e

@@ -31,8 +31,9 @@ syntax deftyp =
   | VARIANT typcase*
 
 syntax typbind = id `: typ
-syntax typfield = atom `: typ `- `{quant*} prem*
-syntax typcase = mixop `: typ `- `{quant*} prem*
+syntax typfield = atom `: typprems
+syntax typcase = mixop `: typprems
+syntax typprems = typ `- `{quant*} prem*
 
 
 ;; Iterators
@@ -130,6 +131,8 @@ syntax exp =
 
 syntax expfield = atom `= exp
 syntax exppull = id `: typ `<- exp
+syntax exppush = exp `-> id `: typ
+syntax expprems = exp `- prem*
 
 syntax path =
   | ROOT               ;;
@@ -174,8 +177,8 @@ syntax prem =
   | IF exp
   | ELSE
   | NOT prem
-  | LET exp `= exp  ;; TODO: variables/quantifiers?
-  | ITER prem iter exppull*
+  | LET `{quant*} exp `= exp
+  | ITER prem iter exppull* exppush*
 
 syntax dec =
   | TYP id param* `= inst*
@@ -185,9 +188,9 @@ syntax dec =
   | REC dec*
 
 syntax inst = INST `{quant*} arg* `=> deftyp
-syntax rul = RULE `{quant*} exp `- prem*
-syntax clause = CLAUSE `{quant*} arg* `=> exp `- prem*
-syntax prod = PROD `{quant*} sym `=> exp `- prem*
+syntax rul = RULE `{quant*} expprems
+syntax clause = CLAUSE `{quant*} arg* `=> expprems
+syntax prod = PROD `{quant*} sym `=> expprems
 
 
 ;; Scripts
