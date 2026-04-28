@@ -258,7 +258,7 @@ $${definition: unrolldt}
 
 .. _def-unrollht:
 
-$${definition: unrollht}
+$${definition: unrollht_}
 
 $${rule: Expand}
 

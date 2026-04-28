@@ -2643,22 +2643,22 @@ syntax context =
 ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec
 rec {
 
-;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:51.1-51.144
+;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:49.1-49.144
 def $with_locals(context : context, localidx*, localtype*) : context
-  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:53.1-53.34
+  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:51.1-51.34
   def $with_locals{C : context}(C, [], []) = C
-  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:54.1-54.90
+  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:52.1-52.90
   def $with_locals{C : context, x_1 : idx, `x*` : idx*, lct_1 : localtype, `lct*` : localtype*}(C, [x_1] ++ x*{x <- `x*`}, [lct_1] ++ lct*{lct <- `lct*`}) = $with_locals(C[LOCALS_context[x_1!`%`_idx.0] = lct_1], x*{x <- `x*`}, lct*{lct <- `lct*`})
 }
 
 ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec
 rec {
 
-;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:64.1-64.94
+;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:62.1-62.94
 def $clos_deftypes(deftype*) : deftype*
-  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:73.1-73.30
+  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:71.1-71.30
   def $clos_deftypes([]) = []
-  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:74.1-74.101
+  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:72.1-72.101
   def $clos_deftypes{`dt*` : deftype*, dt_n : deftype, `dt'*` : deftype*}(dt*{dt <- `dt*`} ++ [dt_n]) = dt'*{dt' <- `dt'*`} ++ [$subst_all_deftype(dt_n, (dt' : deftype <: typeuse)*{dt' <- `dt'*`})]
     -- if (dt'*{dt' <- `dt'*`} = $clos_deftypes(dt*{dt <- `dt*`}))
 }
@@ -2749,13 +2749,13 @@ def $before(typeuse : typeuse, nat : nat) : bool
     -- otherwise
 
 ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec
-def $unrollht(context : context, heaptype : heaptype) : subtype
+def $unrollht_(context : context, heaptype : heaptype) : subtype
   ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec
-  def $unrollht{C : context, deftype : deftype}(C, (deftype : deftype <: heaptype)) = $unrolldt(deftype)
+  def $unrollht_{C : context, deftype : deftype}(C, (deftype : deftype <: heaptype)) = $unrolldt(deftype)
   ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec
-  def $unrollht{C : context, typeidx : typeidx}(C, _IDX_heaptype(typeidx)) = $unrolldt(C.TYPES_context[typeidx!`%`_typeidx.0])
+  def $unrollht_{C : context, typeidx : typeidx}(C, _IDX_heaptype(typeidx)) = $unrolldt(C.TYPES_context[typeidx!`%`_typeidx.0])
   ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec
-  def $unrollht{C : context, i : n}(C, REC_heaptype(i)) = C.RECS_context[i]
+  def $unrollht_{C : context, i : n}(C, REC_heaptype(i)) = C.RECS_context[i]
 
 ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec
 rec {
@@ -2866,23 +2866,23 @@ relation Comptype_ok: `%|-%:OK`(context, comptype)
 
 ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:97.1-97.126
 relation Subtype_ok2: `%|-%:%`(context, subtype, oktypenat)
-  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:167.1-175.49
+  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:167.1-176.49
   rule _{C : context, `typeuse*` : typeuse*, comptype : comptype, i : nat, `comptype'*` : comptype*, `typeuse'**` : typeuse**}:
     `%|-%:%`(C, SUB_subtype(FINAL_final?{}, typeuse*{typeuse <- `typeuse*`}, comptype), OK_oktypenat(i))
     -- if (|typeuse*{typeuse <- `typeuse*`}| <= 1)
     -- (Typeuse_ok: `%|-%:OK`(C, typeuse))*{typeuse <- `typeuse*`}
     -- (if $before(typeuse, i))*{typeuse <- `typeuse*`}
-    -- (if ($unrollht(C, (typeuse : typeuse <: heaptype)) = SUB_subtype(?(), typeuse'*{typeuse' <- `typeuse'*`}, comptype')))*{comptype' <- `comptype'*`, typeuse <- `typeuse*`, `typeuse'*` <- `typeuse'**`}
+    -- (if ($unrollht_(C, (typeuse : typeuse <: heaptype)) = SUB_subtype(?(), typeuse'*{typeuse' <- `typeuse'*`}, comptype')))*{comptype' <- `comptype'*`, typeuse <- `typeuse*`, `typeuse'*` <- `typeuse'**`}
     -- Comptype_ok: `%|-%:OK`(C, comptype)
     -- (Comptype_sub: `%|-%<:%`(C, comptype, comptype'))*{comptype' <- `comptype'*`}
 
 ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:98.1-98.126
 relation Rectype_ok2: `%|-%:%`(context, rectype, oktypenat)
-  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:187.1-188.23
+  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:188.1-189.23
   rule empty{C : context, i : nat}:
     `%|-%:%`(C, REC_rectype(`%`_list([])), OK_oktypenat(i))
 
-  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:190.1-193.49
+  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:191.1-194.49
   rule cons{C : context, subtype_1 : subtype, `subtype*` : subtype*, i : nat}:
     `%|-%:%`(C, REC_rectype(`%`_list([subtype_1] ++ subtype*{subtype <- `subtype*`})), OK_oktypenat(i))
     -- Subtype_ok2: `%|-%:%`(C, subtype_1, OK_oktypenat(i))
@@ -2890,7 +2890,7 @@ relation Rectype_ok2: `%|-%:%`(context, rectype, oktypenat)
 
 ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:99.1-99.102
 relation Deftype_ok: `%|-%:OK`(context, deftype)
-  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:196.1-200.14
+  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:197.1-201.14
   rule _{C : context, rectype : rectype, i : n, n : n, `subtype*` : subtype*}:
     `%|-%:OK`(C, _DEF_deftype(rectype, i))
     -- Rectype_ok2: `%|-%:%`({TYPES [], TAGS [], GLOBALS [], MEMS [], TABLES [], FUNCS [], DATAS [], ELEMS [], LOCALS [], LABELS [], RETURN ?(), REFS [], RECS subtype^n{subtype <- `subtype*`}} +++ C, rectype, OK_oktypenat(0))
@@ -3134,11 +3134,11 @@ rec {
 
 ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:96.1-96.126
 relation Rectype_ok: `%|-%:%`(context, rectype, oktypeidx)
-  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:178.1-179.23
+  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:179.1-180.23
   rule empty{C : context, x : idx}:
     `%|-%:%`(C, REC_rectype(`%`_list([])), OK_oktypeidx(x))
 
-  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:181.1-184.48
+  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:182.1-185.48
   rule cons{C : context, subtype_1 : subtype, `subtype*` : subtype*, x : idx}:
     `%|-%:%`(C, REC_rectype(`%`_list([subtype_1] ++ subtype*{subtype <- `subtype*`})), OK_oktypeidx(x))
     -- Subtype_ok: `%|-%:%`(C, subtype_1, OK_oktypeidx(x))
@@ -14471,22 +14471,22 @@ syntax context =
 ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec
 rec {
 
-;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:51.1-51.144
+;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:49.1-49.144
 def $with_locals(context : context, localidx*, localtype*) : context
-  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:53.1-53.34
+  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:51.1-51.34
   def $with_locals{C : context}(C, [], []) = C
-  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:54.1-54.90
+  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:52.1-52.90
   def $with_locals{C : context, x_1 : idx, `x*` : idx*, lct_1 : localtype, `lct*` : localtype*}(C, [x_1] ++ x*{x <- `x*`}, [lct_1] ++ lct*{lct <- `lct*`}) = $with_locals(C[LOCALS_context[x_1!`%`_idx.0] = lct_1], x*{x <- `x*`}, lct*{lct <- `lct*`})
 }
 
 ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec
 rec {
 
-;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:64.1-64.94
+;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:62.1-62.94
 def $clos_deftypes(deftype*) : deftype*
-  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:73.1-73.30
+  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:71.1-71.30
   def $clos_deftypes([]) = []
-  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:74.1-74.101
+  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:72.1-72.101
   def $clos_deftypes{`dt*` : deftype*, dt_n : deftype, `dt'*` : deftype*}(dt*{dt <- `dt*`} ++ [dt_n]) = dt'*{dt' <- `dt'*`} ++ [$subst_all_deftype(dt_n, (dt' : deftype <: typeuse)*{dt' <- `dt'*`})]
     -- if (dt'*{dt' <- `dt'*`} = $clos_deftypes(dt*{dt <- `dt*`}))
 }
@@ -14577,13 +14577,13 @@ def $before(typeuse : typeuse, nat : nat) : bool
     -- otherwise
 
 ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec
-def $unrollht(context : context, heaptype : heaptype) : subtype
+def $unrollht_(context : context, heaptype : heaptype) : subtype
   ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec
-  def $unrollht{C : context, deftype : deftype}(C, (deftype : deftype <: heaptype)) = $unrolldt(deftype)
+  def $unrollht_{C : context, deftype : deftype}(C, (deftype : deftype <: heaptype)) = $unrolldt(deftype)
   ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec
-  def $unrollht{C : context, typeidx : typeidx}(C, _IDX_heaptype(typeidx)) = $unrolldt(C.TYPES_context[typeidx!`%`_typeidx.0])
+  def $unrollht_{C : context, typeidx : typeidx}(C, _IDX_heaptype(typeidx)) = $unrolldt(C.TYPES_context[typeidx!`%`_typeidx.0])
   ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec
-  def $unrollht{C : context, i : n}(C, REC_heaptype(i)) = C.RECS_context[i]
+  def $unrollht_{C : context, i : n}(C, REC_heaptype(i)) = C.RECS_context[i]
 
 ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec
 rec {
@@ -14694,23 +14694,23 @@ relation Comptype_ok: `%|-%:OK`(context, comptype)
 
 ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:97.1-97.126
 relation Subtype_ok2: `%|-%:%`(context, subtype, oktypenat)
-  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:167.1-175.49
+  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:167.1-176.49
   rule _{C : context, `typeuse*` : typeuse*, comptype : comptype, i : nat, `comptype'*` : comptype*, `typeuse'**` : typeuse**}:
     `%|-%:%`(C, SUB_subtype(FINAL_final?{}, typeuse*{typeuse <- `typeuse*`}, comptype), OK_oktypenat(i))
     -- if (|typeuse*{typeuse <- `typeuse*`}| <= 1)
     -- (Typeuse_ok: `%|-%:OK`(C, typeuse))*{typeuse <- `typeuse*`}
     -- (if $before(typeuse, i))*{typeuse <- `typeuse*`}
-    -- (if ($unrollht(C, (typeuse : typeuse <: heaptype)) = SUB_subtype(?(), typeuse'*{typeuse' <- `typeuse'*`}, comptype')))*{comptype' <- `comptype'*`, typeuse <- `typeuse*`, `typeuse'*` <- `typeuse'**`}
+    -- (if ($unrollht_(C, (typeuse : typeuse <: heaptype)) = SUB_subtype(?(), typeuse'*{typeuse' <- `typeuse'*`}, comptype')))*{comptype' <- `comptype'*`, typeuse <- `typeuse*`, `typeuse'*` <- `typeuse'**`}
     -- Comptype_ok: `%|-%:OK`(C, comptype)
     -- (Comptype_sub: `%|-%<:%`(C, comptype, comptype'))*{comptype' <- `comptype'*`}
 
 ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:98.1-98.126
 relation Rectype_ok2: `%|-%:%`(context, rectype, oktypenat)
-  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:187.1-188.23
+  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:188.1-189.23
   rule empty{C : context, i : nat}:
     `%|-%:%`(C, REC_rectype(`%`_list([])), OK_oktypenat(i))
 
-  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:190.1-193.49
+  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:191.1-194.49
   rule cons{C : context, subtype_1 : subtype, `subtype*` : subtype*, i : nat}:
     `%|-%:%`(C, REC_rectype(`%`_list([subtype_1] ++ subtype*{subtype <- `subtype*`})), OK_oktypenat(i))
     -- Subtype_ok2: `%|-%:%`(C, subtype_1, OK_oktypenat(i))
@@ -14718,7 +14718,7 @@ relation Rectype_ok2: `%|-%:%`(context, rectype, oktypenat)
 
 ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:99.1-99.102
 relation Deftype_ok: `%|-%:OK`(context, deftype)
-  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:196.1-200.14
+  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:197.1-201.14
   rule _{C : context, rectype : rectype, i : n, n : n, `subtype*` : subtype*}:
     `%|-%:OK`(C, _DEF_deftype(rectype, i))
     -- Rectype_ok2: `%|-%:%`({TYPES [], TAGS [], GLOBALS [], MEMS [], TABLES [], FUNCS [], DATAS [], ELEMS [], LOCALS [], LABELS [], RETURN ?(), REFS [], RECS subtype^n{subtype <- `subtype*`}} +++ C, rectype, OK_oktypenat(0))
@@ -14962,11 +14962,11 @@ rec {
 
 ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:96.1-96.126
 relation Rectype_ok: `%|-%:%`(context, rectype, oktypeidx)
-  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:178.1-179.23
+  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:179.1-180.23
   rule empty{C : context, x : idx}:
     `%|-%:%`(C, REC_rectype(`%`_list([])), OK_oktypeidx(x))
 
-  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:181.1-184.48
+  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:182.1-185.48
   rule cons{C : context, subtype_1 : subtype, `subtype*` : subtype*, x : idx}:
     `%|-%:%`(C, REC_rectype(`%`_list([subtype_1] ++ subtype*{subtype <- `subtype*`})), OK_oktypeidx(x))
     -- Subtype_ok: `%|-%:%`(C, subtype_1, OK_oktypeidx(x))
@@ -26301,22 +26301,22 @@ syntax context =
 ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec
 rec {
 
-;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:51.1-51.144
+;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:49.1-49.144
 def $with_locals(context : context, localidx*, localtype*) : context
-  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:53.1-53.34
+  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:51.1-51.34
   def $with_locals{C : context}(C, [], []) = C
-  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:54.1-54.90
+  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:52.1-52.90
   def $with_locals{C : context, x_1 : idx, `x*` : idx*, lct_1 : localtype, `lct*` : localtype*}(C, [x_1] ++ x*{x <- `x*`}, [lct_1] ++ lct*{lct <- `lct*`}) = $with_locals(C[LOCALS_context[x_1!`%`_idx.0] = lct_1], x*{x <- `x*`}, lct*{lct <- `lct*`})
 }
 
 ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec
 rec {
 
-;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:64.1-64.94
+;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:62.1-62.94
 def $clos_deftypes(deftype*) : deftype*
-  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:73.1-73.30
+  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:71.1-71.30
   def $clos_deftypes([]) = []
-  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:74.1-74.101
+  ;; ../../../../specification/wasm-latest/2.0-validation.contexts.spectec:72.1-72.101
   def $clos_deftypes{`dt*` : deftype*, dt_n : deftype, `dt'*` : deftype*}(dt*{dt <- `dt*`} ++ [dt_n]) = dt'*{dt' <- `dt'*`} ++ [$subst_all_deftype(dt_n, (dt' : deftype <: typeuse)*{dt' <- `dt'*`})]
     -- if (dt'*{dt' <- `dt'*`} = $clos_deftypes(dt*{dt <- `dt*`}))
 }
@@ -26407,13 +26407,13 @@ def $before(typeuse : typeuse, nat : nat) : bool
     -- otherwise
 
 ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec
-def $unrollht(context : context, heaptype : heaptype) : subtype
+def $unrollht_(context : context, heaptype : heaptype) : subtype
   ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec
-  def $unrollht{C : context, deftype : deftype}(C, (deftype : deftype <: heaptype)) = $unrolldt(deftype)
+  def $unrollht_{C : context, deftype : deftype}(C, (deftype : deftype <: heaptype)) = $unrolldt(deftype)
   ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec
-  def $unrollht{C : context, typeidx : typeidx}(C, _IDX_heaptype(typeidx)) = $unrolldt(C.TYPES_context[typeidx!`%`_typeidx.0])
+  def $unrollht_{C : context, typeidx : typeidx}(C, _IDX_heaptype(typeidx)) = $unrolldt(C.TYPES_context[typeidx!`%`_typeidx.0])
   ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec
-  def $unrollht{C : context, i : n}(C, REC_heaptype(i)) = C.RECS_context[i]
+  def $unrollht_{C : context, i : n}(C, REC_heaptype(i)) = C.RECS_context[i]
 
 ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec
 rec {
@@ -26526,7 +26526,7 @@ relation Comptype_ok: `%|-%:OK`(context, comptype)
 
 ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:97.1-97.126
 relation Subtype_ok2: `%|-%:%`(context, subtype, oktypenat)
-  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:167.1-175.49
+  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:167.1-176.49
   rule _{C : context, `typeuse*` : typeuse*, comptype : comptype, i : nat, `comptype'*` : comptype*, `typeuse'**` : typeuse**}:
     `%|-%:%`(C, SUB_subtype(FINAL_final?{}, typeuse*{typeuse <- `typeuse*`}, comptype), OK_oktypenat(i))
     -- if (|typeuse*{typeuse <- `typeuse*`}| <= 1)
@@ -26534,17 +26534,17 @@ relation Subtype_ok2: `%|-%:%`(context, subtype, oktypenat)
     -- (if $before(typeuse, i))*{typeuse <- `typeuse*`}
     -- if (|`comptype'*`| = |`typeuse*`|)
     -- if (|`comptype'*`| = |`typeuse'**`|)
-    -- (if ($unrollht(C, (typeuse : typeuse <: heaptype)) = SUB_subtype(?(), typeuse'*{typeuse' <- `typeuse'*`}, comptype')))*{comptype' <- `comptype'*`, typeuse <- `typeuse*`, `typeuse'*` <- `typeuse'**`}
+    -- (if ($unrollht_(C, (typeuse : typeuse <: heaptype)) = SUB_subtype(?(), typeuse'*{typeuse' <- `typeuse'*`}, comptype')))*{comptype' <- `comptype'*`, typeuse <- `typeuse*`, `typeuse'*` <- `typeuse'**`}
     -- Comptype_ok: `%|-%:OK`(C, comptype)
     -- (Comptype_sub: `%|-%<:%`(C, comptype, comptype'))*{comptype' <- `comptype'*`}
 
 ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:98.1-98.126
 relation Rectype_ok2: `%|-%:%`(context, rectype, oktypenat)
-  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:187.1-188.23
+  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:188.1-189.23
   rule empty{C : context, i : nat}:
     `%|-%:%`(C, REC_rectype(`%`_list([])), OK_oktypenat(i))
 
-  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:190.1-193.49
+  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:191.1-194.49
   rule cons{C : context, subtype_1 : subtype, `subtype*` : subtype*, i : nat}:
     `%|-%:%`(C, REC_rectype(`%`_list([subtype_1] ++ subtype*{subtype <- `subtype*`})), OK_oktypenat(i))
     -- Subtype_ok2: `%|-%:%`(C, subtype_1, OK_oktypenat(i))
@@ -26552,7 +26552,7 @@ relation Rectype_ok2: `%|-%:%`(context, rectype, oktypenat)
 
 ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:99.1-99.102
 relation Deftype_ok: `%|-%:OK`(context, deftype)
-  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:196.1-200.14
+  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:197.1-201.14
   rule _{C : context, rectype : rectype, i : n, n : n, `subtype*` : subtype*}:
     `%|-%:OK`(C, _DEF_deftype(rectype, i))
     -- Rectype_ok2: `%|-%:%`({TYPES [], TAGS [], GLOBALS [], MEMS [], TABLES [], FUNCS [], DATAS [], ELEMS [], LOCALS [], LABELS [], RETURN ?(), REFS [], RECS subtype^n{subtype <- `subtype*`}} +++ C, rectype, OK_oktypenat(0))
@@ -26809,11 +26809,11 @@ rec {
 
 ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:96.1-96.126
 relation Rectype_ok: `%|-%:%`(context, rectype, oktypeidx)
-  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:178.1-179.23
+  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:179.1-180.23
   rule empty{C : context, x : idx}:
     `%|-%:%`(C, REC_rectype(`%`_list([])), OK_oktypeidx(x))
 
-  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:181.1-184.48
+  ;; ../../../../specification/wasm-latest/2.1-validation.types.spectec:182.1-185.48
   rule cons{C : context, subtype_1 : subtype, `subtype*` : subtype*, x : idx}:
     `%|-%:%`(C, REC_rectype(`%`_list([subtype_1] ++ subtype*{subtype <- `subtype*`})), OK_oktypeidx(x))
     -- Subtype_ok: `%|-%:%`(C, subtype_1, OK_oktypeidx(x))

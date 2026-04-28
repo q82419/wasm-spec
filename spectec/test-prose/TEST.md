@@ -14192,7 +14192,7 @@ The composite type :math:`(\mathsf{func}~{t_1^\ast}~\rightarrow~{t_2^\ast})` is 
 
 
 
-The sub type :math:`(\mathsf{sub}~{\mathsf{final}^?}~{{\mathit{typeuse}}^\ast}~{\mathit{comptype}})` is :ref:`valid <valid-val>` for :math:`({\mathsf{ok}}{i})` if:
+The sub type :math:`(\mathsf{sub}~{\mathsf{final}^?}~{{\mathit{typeuse}}^\ast}~{\mathit{comptype}})` is :ref:`valid <valid-val>` for :math:`i` if:
 
 
    * The length of :math:`{{\mathit{typeuse}}^\ast}` is less than or equal to :math:`1`.
@@ -14203,7 +14203,7 @@ The sub type :math:`(\mathsf{sub}~{\mathsf{final}^?}~{{\mathit{typeuse}}^\ast}~{
 
       * :math:`{\mathit{typeuse}} \prec i` is true.
 
-      * The sub type :math:`{{\mathrm{unroll}}}_{C}({\mathit{typeuse}})` is of the form :math:`(\mathsf{sub}~{{\mathit{typeuse}'}^\ast}~{\mathit{comptype}'})`.
+      * The sub type :math:`{{\mathrm{unrollht}}}_{C}({\mathit{typeuse}})` is of the form :math:`(\mathsf{sub}~{{\mathit{typeuse}'}^\ast}~{\mathit{comptype}'})`.
 
    * :math:`{{\mathit{comptype}'}^\ast}` is the concatenation of all such :math:`{\mathit{comptype}'}`.
 
@@ -14216,7 +14216,7 @@ The sub type :math:`(\mathsf{sub}~{\mathsf{final}^?}~{{\mathit{typeuse}}^\ast}~{
 
 
 
-The recursive type :math:`(\mathsf{rec}~{{\mathit{subtype}}^\ast})` is :ref:`valid <valid-val>` for :math:`({\mathsf{ok}}{i})` if:
+The recursive type :math:`(\mathsf{rec}~{{\mathit{subtype}}^\ast})` is :ref:`valid <valid-val>` for :math:`i` if:
 
 
    * Either:
@@ -14227,24 +14227,24 @@ The recursive type :math:`(\mathsf{rec}~{{\mathit{subtype}}^\ast})` is :ref:`val
 
       * The sub type sequence :math:`{{\mathit{subtype}}^\ast}` is of the form :math:`{\mathit{subtype}}_1~{{\mathit{subtype}'}^\ast}`.
 
-      * The sub type :math:`{\mathit{subtype}}_1` is :ref:`valid <valid-val>` for :math:`({\mathsf{ok}}{i})`.
+      * The sub type :math:`{\mathit{subtype}}_1` is :ref:`valid <valid-val>` for :math:`i`.
 
-      * The recursive type :math:`(\mathsf{rec}~{{\mathit{subtype}'}^\ast})` is :ref:`valid <valid-val>` for :math:`({\mathsf{ok}}{i + 1})`.
-
-
-
-
-The recursive type :math:`(\mathsf{rec})` is :ref:`valid <valid-val>` for :math:`({\mathsf{ok}}{i})`.
+      * The recursive type :math:`(\mathsf{rec}~{{\mathit{subtype}'}^\ast})` is :ref:`valid <valid-val>` for :math:`i + 1`.
 
 
 
 
-The recursive type :math:`(\mathsf{rec}~{\mathit{subtype}}_1~{{\mathit{subtype}}^\ast})` is :ref:`valid <valid-val>` for :math:`({\mathsf{ok}}{i})` if:
+The recursive type :math:`(\mathsf{rec})` is :ref:`valid <valid-val>` for :math:`i`.
 
 
-   * The sub type :math:`{\mathit{subtype}}_1` is :ref:`valid <valid-val>` for :math:`({\mathsf{ok}}{i})`.
 
-   * The recursive type :math:`(\mathsf{rec}~{{\mathit{subtype}}^\ast})` is :ref:`valid <valid-val>` for :math:`({\mathsf{ok}}{i + 1})`.
+
+The recursive type :math:`(\mathsf{rec}~{\mathit{subtype}}_1~{{\mathit{subtype}}^\ast})` is :ref:`valid <valid-val>` for :math:`i` if:
+
+
+   * The sub type :math:`{\mathit{subtype}}_1` is :ref:`valid <valid-val>` for :math:`i`.
+
+   * The recursive type :math:`(\mathsf{rec}~{{\mathit{subtype}}^\ast})` is :ref:`valid <valid-val>` for :math:`i + 1`.
 
 
 
@@ -14254,7 +14254,7 @@ The defined type :math:`({\mathit{rectype}} {.} i)` is :ref:`valid <valid-val>` 
 
    * Let :math:`{C'}` be the same context as :math:`C`, but with the sub type sequence :math:`{{\mathit{subtype}}^{n}}` prepended to the field :math:`\mathsf{recs}`.
 
-   * Under the context :math:`{C'}`, the recursive type :math:`{\mathit{rectype}}` is :ref:`valid <valid-val>` for :math:`({\mathsf{ok}}{0})`.
+   * Under the context :math:`{C'}`, the recursive type :math:`{\mathit{rectype}}` is :ref:`valid <valid-val>` for :math:`0`.
 
    * The recursive type :math:`{\mathit{rectype}}` is of the form :math:`(\mathsf{rec}~{{\mathit{subtype}}^{n}})`.
 
@@ -17800,7 +17800,7 @@ The identifier context :math:`I` is :ref:`valid <valid-val>` if:
 The context :math:`C` is :ref:`valid <valid-val>` if:
 
 
-   * The context :math:`C` is of the form :math:`\{ \mathsf{types}~{{\mathit{dt}}^{n}},\;\allowbreak \mathsf{recs}~{{\mathit{st}}^{m}},\;\allowbreak \mathsf{tags}~{{\mathit{jt}}^\ast},\;\allowbreak \mathsf{globals}~{{\mathit{gt}}^\ast},\;\allowbreak \mathsf{mems}~{{\mathit{mt}}^\ast},\;\allowbreak \mathsf{tables}~{{\mathit{tt}}^\ast},\;\allowbreak \mathsf{funcs}~{{\mathit{dt}}_{\mathsf{f}}^\ast},\;\allowbreak \mathsf{datas}~{{\mathit{ok}}^\ast},\;\allowbreak \mathsf{elems}~{{\mathit{et}}^\ast},\;\allowbreak \mathsf{locals}~{{{\mathit{lt}}}^\ast},\;\allowbreak \mathsf{labels}~{{\mathit{rt}}^\ast},\;\allowbreak \mathsf{return}~{{\mathit{rt}'}^?},\;\allowbreak \mathsf{refs}~{x^\ast} \}`.
+   * The context :math:`C` is of the form :math:`\{ \mathsf{types}~{{\mathit{dt}}^{n}},\;\allowbreak \mathsf{tags}~{{\mathit{jt}}^\ast},\;\allowbreak \mathsf{globals}~{{\mathit{gt}}^\ast},\;\allowbreak \mathsf{mems}~{{\mathit{mt}}^\ast},\;\allowbreak \mathsf{tables}~{{\mathit{tt}}^\ast},\;\allowbreak \mathsf{funcs}~{{\mathit{dt}}_{\mathsf{f}}^\ast},\;\allowbreak \mathsf{datas}~{{\mathit{ok}}^\ast},\;\allowbreak \mathsf{elems}~{{\mathit{et}}^\ast},\;\allowbreak \mathsf{locals}~{{{\mathit{lt}}}^\ast},\;\allowbreak \mathsf{labels}~{{\mathit{rt}}^\ast},\;\allowbreak \mathsf{return}~{{\mathit{rt}'}^?},\;\allowbreak \mathsf{refs}~{x^\ast},\;\allowbreak \mathsf{recs}~{{\mathit{st}}^{m}} \}`.
 
    * The context :math:`C_0` is of the form :math:`\{ \mathsf{types}~{{\mathit{dt}}^{n}},\;\allowbreak \mathsf{return}~\epsilon \}`.
 
@@ -17810,7 +17810,7 @@ The context :math:`C` is :ref:`valid <valid-val>` if:
 
    * For all :math:`{\mathit{st}}` in :math:`{{\mathit{st}}^\ast}`:
 
-      * Under the context :math:`\{ \mathsf{types}~{{\mathit{dt}}^{n}},\;\allowbreak \mathsf{recs}~{{\mathit{st}}^{m}},\;\allowbreak \mathsf{return}~\epsilon \}`, the sub type :math:`{\mathit{st}}` is :ref:`valid <valid-val>` for :math:`({\mathsf{ok}}{i})`.
+      * Under the context :math:`\{ \mathsf{types}~{{\mathit{dt}}^{n}},\;\allowbreak \mathsf{return}~\epsilon,\;\allowbreak \mathsf{recs}~{{\mathit{st}}^{m}} \}`, the sub type :math:`{\mathit{st}}` is :ref:`valid <valid-val>` for :math:`i`.
 
    * For all :math:`{\mathit{jt}}` in :math:`{{\mathit{jt}}^\ast}`:
 
@@ -17917,7 +17917,7 @@ The export instance :math:`\{ \mathsf{name}~{\mathit{nm}},\;\allowbreak \mathsf{
 
 
 
-The module instance :math:`\{ \mathsf{types}~{{\mathit{deftype}}^\ast},\;\allowbreak \mathsf{tags}~{{\mathit{tagaddr}}^\ast},\;\allowbreak \mathsf{globals}~{{\mathit{globaladdr}}^\ast},\;\allowbreak \mathsf{mems}~{{\mathit{memaddr}}^\ast},\;\allowbreak \mathsf{tables}~{{\mathit{tableaddr}}^\ast},\;\allowbreak \mathsf{funcs}~{{\mathit{funcaddr}}^\ast},\;\allowbreak \mathsf{datas}~{{\mathit{dataaddr}}^\ast},\;\allowbreak \mathsf{elems}~{{\mathit{elemaddr}}^\ast},\;\allowbreak \mathsf{exports}~{{\mathit{exportinst}}^\ast} \}` is :ref:`valid <valid-val>` with the context :math:`\{ \mathsf{types}~{{\mathit{deftype}}^\ast},\;\allowbreak \mathsf{recs}~{{\mathit{subtype}}^\ast},\;\allowbreak \mathsf{tags}~{{\mathit{tagtype}}^\ast},\;\allowbreak \mathsf{globals}~{{\mathit{globaltype}}^\ast},\;\allowbreak \mathsf{mems}~{{\mathit{memtype}}^\ast},\;\allowbreak \mathsf{tables}~{{\mathit{tabletype}}^\ast},\;\allowbreak \mathsf{funcs}~{{\mathit{deftype}}_{\mathsf{f}}^\ast},\;\allowbreak \mathsf{datas}~{{\mathit{datatype}}^\ast},\;\allowbreak \mathsf{elems}~{{\mathit{elemtype}}^\ast},\;\allowbreak \mathsf{return}~\epsilon,\;\allowbreak \mathsf{refs}~{i^{i<{|{{\mathit{funcaddr}}^\ast}|}}} \}` if:
+The module instance :math:`\{ \mathsf{types}~{{\mathit{deftype}}^\ast},\;\allowbreak \mathsf{tags}~{{\mathit{tagaddr}}^\ast},\;\allowbreak \mathsf{globals}~{{\mathit{globaladdr}}^\ast},\;\allowbreak \mathsf{mems}~{{\mathit{memaddr}}^\ast},\;\allowbreak \mathsf{tables}~{{\mathit{tableaddr}}^\ast},\;\allowbreak \mathsf{funcs}~{{\mathit{funcaddr}}^\ast},\;\allowbreak \mathsf{datas}~{{\mathit{dataaddr}}^\ast},\;\allowbreak \mathsf{elems}~{{\mathit{elemaddr}}^\ast},\;\allowbreak \mathsf{exports}~{{\mathit{exportinst}}^\ast} \}` is :ref:`valid <valid-val>` with the context :math:`\{ \mathsf{types}~{{\mathit{deftype}}^\ast},\;\allowbreak \mathsf{tags}~{{\mathit{tagtype}}^\ast},\;\allowbreak \mathsf{globals}~{{\mathit{globaltype}}^\ast},\;\allowbreak \mathsf{mems}~{{\mathit{memtype}}^\ast},\;\allowbreak \mathsf{tables}~{{\mathit{tabletype}}^\ast},\;\allowbreak \mathsf{funcs}~{{\mathit{deftype}}_{\mathsf{f}}^\ast},\;\allowbreak \mathsf{datas}~{{\mathit{datatype}}^\ast},\;\allowbreak \mathsf{elems}~{{\mathit{elemtype}}^\ast},\;\allowbreak \mathsf{return}~\epsilon,\;\allowbreak \mathsf{refs}~{i^{i<{|{{\mathit{funcaddr}}^\ast}|}}},\;\allowbreak \mathsf{recs}~{{\mathit{subtype}}^\ast} \}` if:
 
 
    * For all :math:`{\mathit{deftype}}` in :math:`{{\mathit{deftype}}^\ast}`:
@@ -24461,8 +24461,8 @@ The instruction sequence :math:`(\mathsf{block}~{\mathit{blocktype}}~{{\mathit{i
 #. Return :math:`j < i`.
 
 
-:math:`{{\mathrm{unroll}}}_{C}({\mathit{heaptype}})`
-....................................................
+:math:`{{\mathrm{unrollht}}}_{C}({\mathit{heaptype}})`
+......................................................
 
 
 1. If :math:`{\mathit{heaptype}}` is defined type, then:
@@ -27861,7 +27861,7 @@ Subtype_ok2
   - For all typeuse in typeuse*:
     - the type use typeuse is valid.
     - $before(typeuse, i) is true.
-    - the sub type $unrollht(C, typeuse) is (SUB ?() typeuse'* comptype').
+    - the sub type $unrollht_(C, typeuse) is (SUB ?() typeuse'* comptype').
   - comptype'* is the concatenation of all such comptype'.
   - the composite type comptype is valid.
   - For all comptype' in comptype'*:
@@ -29720,12 +29720,12 @@ Idctxt_ok
 
 Context_ok
 - the context C is valid if:
-  - C is { TYPES: dt^n; RECS: st^m; TAGS: jt*; GLOBALS: gt*; MEMS: mt*; TABLES: tt*; FUNCS: dt_F*; DATAS: ok*; ELEMS: et*; LOCALS: lct*; LABELS: [rt*]; RETURN: ?(rt'?); REFS: x* }.
+  - C is { TYPES: dt^n; TAGS: jt*; GLOBALS: gt*; MEMS: mt*; TABLES: tt*; FUNCS: dt_F*; DATAS: ok*; ELEMS: et*; LOCALS: lct*; LABELS: [rt*]; RETURN: ?(rt'?); REFS: x*; RECS: st^m }.
   - the context C_0 is { TYPES: dt^n; RETURN: ?() }.
   - For all dt in dt*:
     - Under the context { TYPES: dt^n[0 : i]; RETURN: ?() }, the defined type dt is valid.
   - For all st in st*:
-    - Under the context { TYPES: dt^n; RECS: st^m; RETURN: ?() }, the sub type st is valid for (OK i).
+    - Under the context { TYPES: dt^n; RETURN: ?(); RECS: st^m }, the sub type st is valid for (OK i).
   - For all jt in jt*:
     - Under the context C_0, the tag type jt is valid.
   - For all gt in gt*:
@@ -29780,7 +29780,7 @@ Exportinst_ok
   - the external address xa is valid with the external type xt.
 
 Moduleinst_ok
-- the module instance { TYPES: deftype*; TAGS: tagaddr*; GLOBALS: globaladdr*; MEMS: memaddr*; TABLES: tableaddr*; FUNCS: funcaddr*; DATAS: dataaddr*; ELEMS: elemaddr*; EXPORTS: exportinst* } is valid with the context { TYPES: deftype*; RECS: subtype*; TAGS: tagtype*; GLOBALS: globaltype*; MEMS: memtype*; TABLES: tabletype*; FUNCS: deftype_F*; DATAS: datatype*; ELEMS: elemtype*; RETURN: ?(); REFS: i^(i<|funcaddr*|) } if:
+- the module instance { TYPES: deftype*; TAGS: tagaddr*; GLOBALS: globaladdr*; MEMS: memaddr*; TABLES: tableaddr*; FUNCS: funcaddr*; DATAS: dataaddr*; ELEMS: elemaddr*; EXPORTS: exportinst* } is valid with the context { TYPES: deftype*; TAGS: tagtype*; GLOBALS: globaltype*; MEMS: memtype*; TABLES: tabletype*; FUNCS: deftype_F*; DATAS: datatype*; ELEMS: elemtype*; RETURN: ?(); REFS: i^(i<|funcaddr*|); RECS: subtype* } if:
   - For all deftype in deftype*:
     - Under the context { RETURN: ?() }, the defined type deftype is valid.
   - For all tagaddr in tagaddr*, and corresponding tagtype in tagtype*:
@@ -32877,7 +32877,7 @@ before typeuse i
 2. Let (REC j) be typeuse.
 3. Return (j < i).
 
-unrollht C heaptype
+unrollht_ C heaptype
 1. If heaptype is deftype, then:
   a. Return $unrolldt(heaptype).
 2. If heaptype is some _IDX, then:
