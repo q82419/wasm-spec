@@ -1395,37 +1395,39 @@ var ep : exppull
 var eq : exppush
 
 rule Step_prems/ITER-QUEST:
-  S |- ITER pr QUEST (x_1 `: t_1 `<- OPT e_1?)* (e_2 `-> x_2 `: t_2)* ~>_({EXP (x_2, OPT $subst_exp(s', e''_2)?)*} ++ s')
-    $subst_prem({EXP (x_1, e'_1)*}, pr')?
+  S |- ITER pr QUEST (x_1 `: t_1 `<- OPT e_1?)* (e_2 `-> x_2 `: t_2)*
+    ~>_{EXP (x_2, OPT $subst_exp(s', e'_2)?)*}
+      $subst_prem({EXP (x_1, e'_1)*}, pr')?
+  -- (if |e_1?| = |e_1?*[0]|)*
   -- if e'_1*? = $transpose_(exp, e_1?*)
-  -- if e'_2*? = $transpose_(exp, e''_2?*)
-  -- (if |e_1?| = |e''_2?|)*
-  -- (if e'_2 = e_2)*?
-  -- if (pr', s') = $refresh_prem(pr)
+  -- if e'_2?* = $transpose_(exp, e_2*?)
+  -- (if (pr', s') = $refresh_prem(pr))?
+
+rule Step_prems/ITER-QUEST-bad:
+  S |- ITER pr QUEST (x_1 `: t_1 `<- OPT e_1?)* (e_2 `-> x_2 `: t_2)* ~>_{} eps
+  -- if |e_1?*[i]| =/= |e_1?*[0]|
 
 rule Step_prems/ITER-PLUS:
-  S |- ITER pr PLUS (x_1 `: t_1 `<- LIST e_1*)* (e_2 `-> x_2 `: t_2)* ~>_{}
-    (ITER pr STAR (x_1 `: t_1 `<- LIST e_1*)* (e_2 `-> x_2 `: t_2)*)
-  -- if |e_1**[0]| >= 1
+  S |- ITER pr PLUS (x_1 `: t_1 `<- LIST e_1^n)* (e_2 `-> x_2 `: t_2)* ~>_{}
+    (ITER pr STAR (x_1 `: t_1 `<- LIST e_1^n)* (e_2 `-> x_2 `: t_2)*)
+  -- if n*[0] >= 1
 
 rule Step_prems/ITER-STAR:
-  S |- ITER pr STAR (x_1 `: t_1 `<- LIST e_1*)* (e_2 `-> x_2 `: t_2)* ~>_{}
-    (ITER pr (SUP y (NAT n)) (x_1 `: t_1 `<- LIST e_1*)* (e_2 `-> x_2 `: t_2)*)
-  -- if |e_1**[0]| = n
+  S |- ITER pr STAR (x_1 `: t_1 `<- LIST e_1^n)* (e_2 `-> x_2 `: t_2)* ~>_{}
+    (ITER pr (SUP y (NAT n*[0])) (x_1 `: t_1 `<- LIST e_1^n)* (e_2 `-> x_2 `: t_2)*)
   -- Fresh_id: y FRESH
 
 rule Step_prems/ITER-SUP-good:
-  S |- ITER pr (SUP y (NAT n)) (x_1 `: t_1 `<- LIST e_1^n)* ~>_({EXP (x_2, LIST $subst_exp(s', e''_2)^n)*} ++ s')
-    $subst_prem({EXP (x_1, e'_1)* (y, NAT i)}, pr')^(i<n)
+  S |- ITER pr (SUP y (NAT n)) (x_1 `: t_1 `<- LIST e_1^n)* (e_2 `-> x_2 `: t_1)*
+    ~>_{EXP (x_2, LIST $subst_exp(s', e'_2)^n)*}
+      $subst_prem({EXP (x_1, e'_1)* (y, NAT i)}, pr')^(i<n)
   -- if e'_1*^n = $transpose_(exp, e_1^n*)
-  -- if e'_2*^n = $transpose_(exp, e''_2^n*)
-  -- (if e'_2 = e_2)*^n
-  -- if (pr', s') = $refresh_prem(pr)
+  -- if e'_2^n* = $transpose_(exp, e_2*^n)
+  -- (if (pr', s') = $refresh_prem(pr))^n
 
 rule Step_prems/ITER-SUP-bad:
-  S |- ITER pr (SUP y (NAT n)) (x_1 `: t_1 `<- LIST e_1^n')^k ~>_({EXP (x_2, LIST $subst_exp(s', e''_2)^n)*} ++ s')
-    $subst_prem({EXP (x_1, e'_1)^k (y, NAT i)}, pr')^(i<n)
-  -- if n'^k =/= n^k
+  S |- ITER pr (SUP y (NAT n)) (x_1 `: t_1 `<- LIST e_1^n')* (e_2 `-> x_2 `: t_1)* ~>_{} eps
+  -- if n'*[i] =/= n
 
 
 ;; context Prem(X : prem) : prem =
